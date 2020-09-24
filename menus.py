@@ -2,18 +2,18 @@
 project: Lockbox
 file: constants.py
 authors: david rademacher & welton king v
-desc: contains constants
+desc: contains menu option tuples
 '''
 
 # list of login commands
-LOGIN_CMDS = (
+MENU_LOGIN = (
 	'Create new account',
 	'Log in to existing account',
 	'Quit'
 )
 
 # list of main menu commands
-MENU_CMDS = (
+MENU_MAIN = (
 	'Retrieve your list of credentials',
 	'Store new credentials',
 	'Update credentials',
