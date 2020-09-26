@@ -40,21 +40,35 @@ def store_new():
     password = print_prompt('Password')
     if check_cancel(password): return ()
     return (account, username, password, dt.now())
-    
+
 # printing format for table of credentials
-def print_credentials(tbl, cols):
-    print('\n')
-    if tbl is None: print('  No credentials to display.')
+def print_credentials(profile, tbl, cols):
+    #print_header(f'{profile}\'s Credentials')   <-- feel free to revert, changed to match continuity with main_menu() function - delete when read :-)
+    print_header()
+    print(f' {profile}\'s Credentials\n')
+    if tbl is None: print(' No credentials to display.')
     else:
-        cw = 15
-        for name in cols: print(f'|{name: <{cw}}', end='')
-            
-        print('\n' + ('+' + '-'*cw)*len(cols))
-        
+        cws = column_widths(tbl, cols)
+        print('\n ', end='')
+        for i in range(len(cols)): print(f'|{cols[i]: <{cws[i]}}', end='')
+        print('\n ', end='')
+        for i in range(len(cols)): print('+' + '-' * cws[i], end='')
+
         # TODO: format the date (probably don't need nanosecond precision)
+        print()
         for row in tbl:
-            for lmnt in row: print(f'|{lmnt: <{cw}}', end='')
+            print(' ', end='')
+            for i in range(len(row)): print(f'|{row[i]: <{cws[i]}}', end='')
             print()
+
+# calculate column widths given table and column headers
+def column_widths(tbl, cols):
+    widths = [0] * len(cols)
+    padding = 3
+    for i in range(len(cols)): widths[i] = len(cols[i]) + padding
+    for row in tbl:
+        for i in range(len(row)): widths[i] = max(len(row[i]) + padding, widths[i])
+    return widths
 
 # prints a command list given a tuple of strings and returns input
 def print_cmds(options):
@@ -73,7 +87,7 @@ def print_prompt(prompt, title=None):
         print(' (or return \'c\' anytime to cancel)\n')
     inp = input(f' {prompt}: ')
     return inp
-    
+
 # checks to see if the input matches the force cancel character (c)
 def check_cancel(inp):
     if inp.lower() == 'c': return True
@@ -83,6 +97,10 @@ def check_cancel(inp):
 def print_header(title='Lockbox Alpha'):
     clear_term()
     print(f'\n-------------------- {title} --------------------\n')
+
+# stall until user presses 'enter'
+def enter_to_return():
+    input('\n\n Press \'Enter\' to go back.')
 
 # clears terminal (from stackoverflow)
 def clear_term():

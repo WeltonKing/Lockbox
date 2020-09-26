@@ -27,23 +27,49 @@ def start():
 def main_menu():
     global state, profile, conn
     inp = cmd.main_menu(profile)
-    # retrieve
-    if inp == 'r':
-        state = states.DISPLAY
-        cmd.print_header(f'{profile}\'s credentials') 
-        cmd.print_credentials(data.retrieve(conn), data.column_names(conn))
+    if inp == 'r': retrieve()
+    if inp == 's': store_new()
+    if inp == 'u': update_existing()
+    if inp == 'd': delete_existing()
+    if inp == 'c': change_user()
+    if inp == 'q': quit()
 
-    if inp == 's': data.store_new(conn, cmd.store_new()) # store new
-    if inp == 'u': data.do_something(conn) # update existing
-    if inp == 'd': data.do_something(conn) # delete existing
-    if inp == 'c': data.do_something(conn) # change user
-    if inp == 'q': cmd.quit() + data.quit(conn) # quit
-
+# handles the credentials display page
 def display():
     global state
-    # pretty bad workaround / not sure of pythonic way to do this
-    input('\n\n  Press Enter to go back.')
+    cmd.enter_to_return()
     state = states.MAIN_MENU
+
+# retrieve list of credentials and display on page
+def retrieve():
+    global state, profile, conn
+    cmd.print_credentials(profile, data.retrieve(conn), data.column_names(conn))
+    state = states.DISPLAY
+
+# prompt user for new credentials to store
+def store_new():
+    global state, conn
+    data.store_new(conn, cmd.store_new())
+
+# prompt user to update existing credentials
+def update_existing():
+    global state, conn
+    data.do_something(conn)
+
+# prompt user to delete existing credentials
+def delete_existing():
+    global state, conn
+    data.do_something(conn)
+
+# log out
+def change_user():
+    global state, conn
+    data.do_something(conn)
+
+# end program
+def quit():
+    global state, conn
+    cmd.quit() + data.quit(conn)
 
 # handles program states
 def process():
