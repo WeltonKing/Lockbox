@@ -39,14 +39,23 @@ def store_new(conn, params):
     execute(conn, SQL_INSERT_CREDENTIALS, params)
 
 # retrieve credentials
-# some duplication of what's going on in the execute() method,
-# but this seems to need a cursor to use .fetchall().
-# didn't want to do too much refactoring here!
+# returns 'None' if the table doesn't exist yet
+# TODO: return 'None' if the table exists, but is empty
+# 		e.g., credentials existed but were deleted
 def retrieve(conn):
     c = conn.cursor()
     try:
         c.execute(SQL_RETRIEVE_CREDENTIALS)
         return c.fetchall()
+    except sqlite3.OperationalError as e:
+        return None
+
+# grab the column names!        
+def column_names(conn):
+    c = conn.cursor()
+    try:
+        c.execute(SQL_RETRIEVE_CREDENTIALS + 'LIMIT 1')
+        return [desc[0] for desc in c.description]
     except sqlite3.OperationalError as e:
         return None
 

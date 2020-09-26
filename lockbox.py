@@ -31,7 +31,7 @@ def main_menu():
     if inp == 'r':
         state = states.DISPLAY
         cmd.print_header(f'{profile}\'s credentials') 
-        cmd.print_credentials(data.retrieve(conn))
+        cmd.print_credentials(data.retrieve(conn), data.column_names(conn)))
 
     if inp == 's': data.store_new(conn, cmd.store_new()) # store new
     if inp == 'u': data.do_something(conn) # update existing

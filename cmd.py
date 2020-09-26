@@ -42,12 +42,12 @@ def store_new():
     return (account, username, password, dt.now())
     
 # printing format for table of credentials
-def print_credentials(tbl):
+def print_credentials(tbl, cols):
     print('\n')
     if tbl is None:
         print('  No credentials to display.')
     else:
-        #TODO: table formatting!
+        for name in cols: print(name)
         for row in tbl: print('  ',row)
 
 # prints a command list given a tuple of strings and returns input
