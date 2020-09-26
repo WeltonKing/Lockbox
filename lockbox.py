@@ -27,12 +27,26 @@ def start():
 def main_menu():
     global state, profile, conn
     inp = cmd.main_menu(profile)
-    if inp == 'r': data.do_something(conn) # retrieve
+    if inp == 'r': # retrieve
+        state = states.DISPLAY
+        cmd.clear_term()
+        # formatting for credential display might go here -
+        # otherwise, credential table data may have to be stored
+        # in a variable by lockbox.py (?)
+        print("\n\n")
+        for row in data.retrieve(conn): print(row)
+
     if inp == 's': data.store_new(conn, cmd.store_new()) # store new
     if inp == 'u': data.do_something(conn) # update existing
     if inp == 'd': data.do_something(conn) # delete existing
     if inp == 'c': data.do_something(conn) # change user
     if inp == 'q': cmd.quit() + data.quit(conn) # quit
+
+def display():
+    global state
+    # pretty bad workaround / not sure of pythonic way to do this
+    input('\n\n Press Enter to go back.')
+    state = states.MAIN_MENU
 
 # handles program states
 def process():
@@ -43,6 +57,7 @@ def process():
         while True:
             if state == states.START_UP: start()
             elif state == states.MAIN_MENU: main_menu()
+            elif state == states.DISPLAY: display()
     return 0
 
 # run process

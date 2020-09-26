@@ -38,6 +38,15 @@ def store_new(conn, params):
     credentials_tbl(conn)
     execute(conn, SQL_INSERT_CREDENTIALS, params)
 
+# retrieve credentials
+# some duplication of what's going on in the execute() method,
+# but this seems to need a cursor to use .fetchall().
+# didn't want to do too much refactoring here!
+def retrieve(conn):
+    c = conn.cursor()
+    c.execute(SQL_RETRIEVE_CREDENTIALS)
+    return c.fetchall()
+
 # verify the 'Credentials' table exists otherwise create it
 def credentials_tbl(conn):
     execute(conn, SQL_CREATE_CREDENTIALS_TBL)

@@ -11,6 +11,12 @@ SQL_INSERT_CREDENTIALS = """
 	VALUES (?, ?, ?)
 	"""
 
+# sql for retrieving the user's list of stored credentials
+# straightforward
+SQL_RETRIEVE_CREDENTIALS = """
+	SELECT * FROM Credentials
+	"""
+
 # sql for creating the 'Credentials' table
 SQL_CREATE_CREDENTIALS_TBL = """
 	CREATE TABLE IF NOT EXISTS Credentials (

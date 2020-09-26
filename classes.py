@@ -11,6 +11,7 @@ from enum import Enum
 class states(Enum):
     START_UP = 0
     MAIN_MENU = 1
+    DISPLAY = 2
 
 # user account object
 class user:
