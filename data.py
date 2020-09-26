@@ -44,8 +44,11 @@ def store_new(conn, params):
 # didn't want to do too much refactoring here!
 def retrieve(conn):
     c = conn.cursor()
-    c.execute(SQL_RETRIEVE_CREDENTIALS)
-    return c.fetchall()
+    try:
+        c.execute(SQL_RETRIEVE_CREDENTIALS)
+        return c.fetchall()
+    except sqlite3.OperationalError as e:
+        return None
 
 # verify the 'Credentials' table exists otherwise create it
 def credentials_tbl(conn):

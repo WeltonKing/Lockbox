@@ -27,14 +27,11 @@ def start():
 def main_menu():
     global state, profile, conn
     inp = cmd.main_menu(profile)
-    if inp == 'r': # retrieve
+    # retrieve
+    if inp == 'r':
         state = states.DISPLAY
-        cmd.clear_term()
-        # formatting for credential display might go here -
-        # otherwise, credential table data may have to be stored
-        # in a variable by lockbox.py (?)
-        print("\n\n")
-        for row in data.retrieve(conn): print(row)
+        cmd.print_header(f'{profile}\'s credentials') 
+        cmd.print_credentials(data.retrieve(conn))
 
     if inp == 's': data.store_new(conn, cmd.store_new()) # store new
     if inp == 'u': data.do_something(conn) # update existing
@@ -45,7 +42,7 @@ def main_menu():
 def display():
     global state
     # pretty bad workaround / not sure of pythonic way to do this
-    input('\n\n Press Enter to go back.')
+    input('\n\n  Press Enter to go back.')
     state = states.MAIN_MENU
 
 # handles program states
