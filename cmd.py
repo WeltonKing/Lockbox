@@ -9,6 +9,7 @@ import getpass, sys
 from os import system
 from menus import *
 from classes import *
+from datetime import datetime as dt
 
 # login and account creation interface
 def start():
@@ -38,7 +39,7 @@ def store_new():
     if check_cancel(username): return ()
     password = print_prompt('Password')
     if check_cancel(password): return ()
-    return (account, username, password)
+    return (account, username, password, dt.now())
     
 # printing format for table of credentials
 def print_credentials(tbl):
