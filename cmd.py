@@ -44,11 +44,17 @@ def store_new():
 # printing format for table of credentials
 def print_credentials(tbl, cols):
     print('\n')
-    if tbl is None:
-        print('  No credentials to display.')
+    if tbl is None: print('  No credentials to display.')
     else:
-        for name in cols: print(name)
-        for row in tbl: print('  ',row)
+        cw = 15
+        for name in cols: print(f'|{name: <{cw}}', end='')
+            
+        print('\n' + ('+' + '-'*cw)*len(cols))
+        
+        # TODO: format the date (probably don't need nanosecond precision)
+        for row in tbl:
+            for lmnt in row: print(f'|{lmnt: <{cw}}', end='')
+            print()
 
 # prints a command list given a tuple of strings and returns input
 def print_cmds(options):

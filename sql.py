@@ -7,7 +7,7 @@ desc: contains sql commands
 
 # sql for inserting a new record into the 'Credentials' table
 SQL_INSERT_CREDENTIALS = """
-	INSERT INTO Credentials(Account, Username, Password, Updated)
+	INSERT INTO Credentials(Account, Username, Password, "Last Updated")
 	VALUES (?, ?, ?, ?)
 	"""
 
@@ -23,6 +23,6 @@ SQL_CREATE_CREDENTIALS_TBL = """
 		Account text,
 		Username text,
 		Password text,
-		Updated timestamp
+		"Last Updated" timestamp
 	);
 	"""
