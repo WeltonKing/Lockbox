@@ -14,7 +14,7 @@ from datetime import datetime as dt
 # login and account creation interface
 def start():
     inp = ''
-    print_header('Login')
+    print_header()
     while inp not in ('c', 'l', 'q'): inp = print_cmds(MENU_LOGIN)
     return inp
 
@@ -33,17 +33,16 @@ def main_menu(user):
 
 # interface for handling the record of a new credential
 def store_new():
-    account = print_prompt('Account', 'Store New Credential')
+    account = print_prompt('Account', True)
     if check_cancel(account): return ()
     username = print_prompt('Username')
     if check_cancel(username): return ()
     password = print_prompt('Password')
     if check_cancel(password): return ()
-    return (account, username, password, dt.now())
+    return (account, username, password, dt.now().strftime('%m/%d/%y'))
 
 # printing format for table of credentials
 def print_credentials(profile, tbl, cols):
-    #print_header(f'{profile}\'s Credentials')   <-- feel free to revert, changed to match continuity with main_menu() function - delete when read :-)
     print_header()
     print(f' {profile}\'s Credentials\n')
     if tbl is None: print(' No credentials to display.')
@@ -54,7 +53,6 @@ def print_credentials(profile, tbl, cols):
         print('\n ', end='')
         for i in range(len(cols)): print('+' + '-' * cws[i], end='')
 
-        # TODO: format the date (probably don't need nanosecond precision)
         print()
         for row in tbl:
             print(' ', end='')
@@ -80,9 +78,9 @@ def print_cmds(options):
     return inp
 
 # prints a prompt for filling out data fields
-def print_prompt(prompt, title=None):
-    if title is not None:
-        print_header(title)
+def print_prompt(prompt, title=False):
+    if title is True:
+        print_header()
         print(' Fill out the following fields')
         print(' (or return \'c\' anytime to cancel)\n')
     inp = input(f' {prompt}: ')
@@ -94,9 +92,9 @@ def check_cancel(inp):
     return False
 
 # prints page header
-def print_header(title='Lockbox Alpha'):
+def print_header():
     clear_term()
-    print(f'\n-------------------- {title} --------------------\n')
+    print(f'\n-------------------- Lockbox Alpha --------------------\n')
 
 # stall until user presses 'enter'
 def enter_to_return():

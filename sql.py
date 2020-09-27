@@ -1,6 +1,6 @@
 '''
 project: Lockbox
-file: constants.py
+file: sql.py
 authors: david rademacher & welton king v
 desc: contains sql commands
 '''
@@ -23,6 +23,6 @@ SQL_CREATE_CREDENTIALS_TBL = """
 		Account text,
 		Username text,
 		Password text,
-		"Last Updated" timestamp
+		"Last Updated" text
 	);
 	"""

@@ -1,6 +1,6 @@
 '''
 project: Lockbox
-file: constants.py
+file: menus.py
 authors: david rademacher & welton king v
 desc: contains menu option tuples
 '''

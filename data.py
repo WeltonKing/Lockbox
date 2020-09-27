@@ -1,6 +1,6 @@
 '''
 project: Lockbox
-file: cmd_interface.py
+file: data.py
 authors: david rademacher & welton king v
 desc: functions that interact with database
 '''
