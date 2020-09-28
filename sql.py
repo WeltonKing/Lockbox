@@ -11,10 +11,20 @@ SQL_INSERT_CREDENTIALS = """
 	VALUES (?, ?, ?, ?)
 	"""
 
+# sql for inserting a new profile into the 'Profiles' table
+SQL_INSERT_PROFILES = """
+	INSERT INTO Profiles(Username, Password)
+	VALUES (?, ?)
+	"""
+
 # sql for retrieving the user's list of stored credentials
-# straightforward
 SQL_RETRIEVE_CREDENTIALS = """
 	SELECT * FROM Credentials
+	"""
+    
+# sql for retrieving the list of stored profiles
+SQL_RETRIEVE_PROFILES = """
+	SELECT * FROM Profiles
 	"""
 
 # sql for creating the 'Credentials' table
@@ -26,3 +36,10 @@ SQL_CREATE_CREDENTIALS_TBL = """
 		"Last Updated" text
 	);
 	"""
+
+SQL_CREATE_PROFILES_TBL = """
+    CREATE TABLE IF NOT EXISTS Profiles (
+        Username text,
+        Password text
+    );
+    """

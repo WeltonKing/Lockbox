@@ -13,6 +13,12 @@ class states(Enum):
     MAIN_MENU = 1
     DISPLAY = 2
 
+# account messages
+class msgs(Enum):
+    PASS_INCORRECT = 0
+    NAME_MISSING = 1
+    NAME_TAKEN = 2
+
 # user account object
 class user:
     def __init__(self, name='', password=''):

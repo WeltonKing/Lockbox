@@ -8,18 +8,33 @@ desc: functions that interact with database
 import sys
 import sqlite3
 from sql import *
+from classes import msgs
 
 # store new account information on database
-def create_account(profile):
-    verification = True
-    if verification is False: return None
-    else: return profile
+def create_account(conn, profile):
+    profiles_tbl(conn)
+    if verify_account(conn, profile) is msgs.NAME_MISSING: 
+        execute(conn, SQL_INSERT_PROFILES, (profile._name, profile._pass))
+        return profile
+    else:
+        return msgs.NAME_TAKEN
 
 # check if account exists and password is correct
-def verify_account(profile):
-    verification = True
-    if verification is False: return None
-    else: return profile
+def verify_account(conn, profile):
+    profiles_tbl(conn)
+    c = conn.cursor()
+    c.execute(SQL_RETRIEVE_PROFILES)
+    proflist = c.fetchall()
+    if len(proflist) == 0: return msgs.NAME_MISSING
+    
+    for i in range(len(proflist)):
+        if proflist[i][0] == profile._name:
+            if proflist[i][1] == profile._pass:
+                return profile
+            else:
+                return msgs.PASS_INCORRECT
+        else:
+            return msgs.NAME_MISSING
 
 # establish connection to, or create, the local database
 def connect():
@@ -62,6 +77,10 @@ def column_names(conn):
 # verify the 'Credentials' table exists otherwise create it
 def credentials_tbl(conn):
     execute(conn, SQL_CREATE_CREDENTIALS_TBL)
+
+# verify the 'Profiles' table exists otherwise create it
+def profiles_tbl(conn):
+    execute(conn, SQL_CREATE_PROFILES_TBL)
 
 # execute a sql command on the database
 def execute(conn, cmd, params=()):

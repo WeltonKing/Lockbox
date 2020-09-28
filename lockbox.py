@@ -16,11 +16,15 @@ conn = data.connect()
 # handles login and account creation
 def start():
     global state, profile, conn
-    while profile.is_empty():
+    logged = False
+    
+    while not logged:
         inp = cmd.start()
-        if inp == 'c': profile = data.create_account(cmd.get_profile()) # create
-        if inp == 'l': profile = data.verify_account(cmd.get_profile()) # login
+        if inp == 'c': profile = data.create_account(conn, cmd.get_profile()) # create
+        if inp == 'l': profile = data.verify_account(conn, cmd.get_profile()) # login
         if inp == 'q': cmd.quit() + data.quit(conn) # quit
+        logged = cmd.login_response(profile)
+        
     state = states.MAIN_MENU
 
 # handles main menu

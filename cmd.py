@@ -23,6 +23,14 @@ def get_profile():
     username = input(' Username: ')
     password = getpass.getpass(' Password: ')
     return user(username, password)
+    
+def login_response(profile):
+    if type(profile) is user: return True
+    if profile == msgs.PASS_INCORRECT: print('\n Incorrect password.')
+    if profile == msgs.NAME_MISSING: print('\n Username does not exist.')
+    if profile == msgs.NAME_TAKEN: print('\n Username is already taken.')
+    enter_to_return()
+    return False
 
 # main menu interface
 def main_menu(user):
