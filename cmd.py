@@ -58,25 +58,35 @@ def print_credentials(profile, tbl, cols):
     else:
         cws = column_widths(tbl, cols)
         print('\n ', end='')
+        for i in range(len(cols)): print('+' + '-' * cws[i], end='')
+        print('+\n ', end='')
         for i in range(len(cols)): print(f'|{cols[i]: <{cws[i]}}', end='')
-        print('\n ', end='')
+        print('|\n ', end='')
         for i in range(len(cols)): print('+' + '-' * cws[i], end='')
 
-        print()
+        print('+')
         for row in tbl:
             print(' ', end='')
             for i in range(len(row)): print(f'|{row[i]: <{cws[i]}}', end='')
-            print()
+            print('|')
+        print(' ', end='')
+        for i in range(len(cols)): print('+' + '-' * cws[i], end='')
+        print('+')
 
 # calculate column widths given table and column headers
 def column_widths(tbl, cols):
+    term_width = os.get_terminal_size().columns
+    # four even columns based on terminal width
+    return [floor(term_width/4)-2] * len(cols)
+    # commented code below will still work with print_credentials() if desired
+    '''
     widths = [0] * len(cols)
     padding = 3
     for i in range(len(cols)): widths[i] = len(cols[i]) + padding
     for row in tbl:
         for i in range(len(row)): widths[i] = max(len(row[i]) + padding, widths[i])
     return widths
-
+    '''
 # prints a command list given a tuple of strings and returns input
 def print_cmds(options):
     print(' Commands:')
@@ -103,9 +113,9 @@ def check_cancel(inp):
 # prints page header
 def print_header(title='Lockbox Alpha'):
     clear_term()
-    t_width = len(title)
-    width = os.get_terminal_size().columns
-    hyphens = (floor(width/2) - floor(t_width/2) - 1) 
+    width = len(title)
+    term_width = os.get_terminal_size().columns
+    hyphens = (floor(term_width/2) - floor(width/2) - 1) 
     print('\n' + '-'*(hyphens-1) + f' {title} ' + '-'*hyphens + '\n')
 
 # stall until user presses 'enter'
