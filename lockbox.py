@@ -67,8 +67,9 @@ def delete_existing():
 
 # log out
 def change_user():
-    global state, conn
-    data.do_something(conn)
+    global state, profile
+    profile = user()
+    state = states.START_UP
 
 # end program
 def quit():
