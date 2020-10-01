@@ -6,7 +6,8 @@ desc: handles cmd line interface
 '''
 
 import getpass, sys
-from os import system
+import os 
+from math import floor
 from menus import *
 from classes import *
 from datetime import datetime as dt
@@ -100,9 +101,12 @@ def check_cancel(inp):
     return False
 
 # prints page header
-def print_header():
+def print_header(title='Lockbox Alpha'):
     clear_term()
-    print(f'\n-------------------- Lockbox Alpha --------------------\n')
+    t_width = len(title)
+    width = os.get_terminal_size().columns
+    hyphens = (floor(width/2) - floor(t_width/2) - 1) 
+    print('\n' + '-'*(hyphens-1) + f' {title} ' + '-'*hyphens + '\n')
 
 # stall until user presses 'enter'
 def enter_to_return():
@@ -110,7 +114,7 @@ def enter_to_return():
 
 # clears terminal (from stackoverflow)
 def clear_term():
-    system('cls||clear')
+    os.system('cls||clear')
 
 # prints goodbye message
 def quit():
